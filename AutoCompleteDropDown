@@ -1,0 +1,39 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class AutoCompleteDropDown {
+
+	public static void main(String[] args) throws InterruptedException {
+         
+		
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.twoplugs.com/");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//a[contains(text(),'Live Posting')]")).click();
+		WebElement opt=driver.findElement(By.id("autocomplete"));
+		opt.clear();
+        
+		opt.sendKeys("Toronto");
+		
+		String text = null;
+		do
+		{
+			opt.sendKeys(Keys.ARROW_DOWN);
+			text=opt.getAttribute("value");
+			if(text.equals("Toronto, OH, USA"))
+			{
+				opt.sendKeys(Keys.ENTER);
+				break;
+			}
+			
+		}while(!text.isEmpty());
+		 
+	}
+
+}
