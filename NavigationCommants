@@ -1,0 +1,21 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
+public class NavigationCommants {
+	public static void main(String[] args) {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.amazon.ca/");
+		driver.navigate().to("https://www.snapdeal.com/");
+		
+		driver.navigate().back();// This will navigate back to https://www.amazon.ca/
+		driver.navigate().forward(); // This will again navigate to https://www.snapdeal.com/
+		
+		driver.navigate().refresh(); // Refresh the page
+	}
+
+}
