@@ -1,0 +1,31 @@
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class FindElementAndFindElements {
+	
+	 
+
+	public static void main(String[] args) {
+		
+	WebDriverManager.chromedriver().setup();
+	WebDriver driver=new ChromeDriver();
+	driver.get("https://demo.nopcommerce.com/");
+	
+	//1) find element return single element
+	
+	WebElement search=driver.findElement(By.xpath("//input[@id='small-searchterms']"));
+	 search.sendKeys("xyz");
+	
+	//2) find elements reurns multiple elements. Here we use List
+	 
+	List<WebElement> option= driver.findElements(By.xpath("//div[@class='footer']//ul//li//a"));
+	System.out.println(option.size());
+	driver.quit();
+	
+}}
