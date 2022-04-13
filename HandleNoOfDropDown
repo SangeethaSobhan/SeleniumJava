@@ -1,0 +1,57 @@
+package practiceProgram;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HandleNoOfDropDown {
+	static WebDriver driver;
+	public static void main(String[] args) {
+		
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();
+		driver.get("https://www.orangehrm.com/open-source/demo/");
+		//approach 1
+		/* WebElement a= driver.findElement(By.id("Form_submitRequest_No_of_Employees"));
+		 Select drpoption1=new Select(a);
+		 drpoption1.selectByVisibleText("0 - 10");
+		 WebElement b=driver.findElement(By.id("Form_submitRequest_Industry"));
+		 Select drpoption2=new Select(b);
+		 drpoption2.selectByIndex(1);
+		 
+		 Select drpoption3=new Select(driver.findElement(By.id("Form_submitRequest_Country")));
+		 drpoption3.selectByValue("Algeria");
+		 */
+		
+		WebElement emp=driver.findElement(By.name("No of Employees"));
+		SelectDropDown(emp,"21 - 25");
+		WebElement industry=driver.findElement(By.name("Industry"));
+		SelectDropDown(industry,"Automotive");
+		WebElement country=driver.findElement(By.name("Country"));
+		SelectDropDown(country,"Albania");
+		 
+		
+	}
+    public static void SelectDropDown(WebElement a,String value)
+    {
+    	
+    	Select drp=new Select(a);
+    	List <WebElement>alloption=drp.getOptions();
+    	
+    	for(WebElement op:alloption)
+		{
+			if(op.getText().equals(value))
+			{
+				op.click();
+				break;
+			}
+		}
+		
+    }
+}
