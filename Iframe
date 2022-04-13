@@ -1,0 +1,42 @@
+package practiceProgram;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Iframe {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.selenium.dev/selenium/docs/api/java/index.html?overview-summary.html");
+		driver.manage().window().maximize();
+		// 1st iframe
+		driver.switchTo().frame("packageListFrame");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//main[@class='indexContainer']//a[contains(text(),'org.openqa.selenium.chrome')]")).click();
+	    
+		driver.switchTo().defaultContent();
+		// 2nd frame
+		Thread.sleep(3000);
+		driver.switchTo().frame("packageFrame");
+		driver.findElement(By.xpath("//li//a[contains(text(),'AddHasCasting')]")).click();
+		
+		// 3rd frame
+		driver.switchTo().defaultContent();
+		Thread.sleep(3000);
+		driver.switchTo().frame("classFrame");
+		driver.findElement(By.xpath("//div[@class='topNav']//a[contains(text(),'Help')]")).click();
+	   
+	
+	
+	
+	
+	}
+	
+	
+	
+
+}
