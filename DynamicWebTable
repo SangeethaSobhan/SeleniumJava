@@ -1,0 +1,74 @@
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class DynamicWebTable {
+
+	public static void main(String[] args) {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://demo.opencart.com/admin/index.php");
+        
+		WebElement username=driver.findElement(By.id("input-username"));
+		username.clear();
+		username.sendKeys("demo");
+		
+		WebElement passwrd=driver.findElement(By.id("input-password"));
+		passwrd.clear();
+		passwrd.sendKeys("demo");
+		
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		driver.findElement(By.xpath("//a[contains(text(),' Sales')]")).click();
+		driver.findElement(By.xpath("//a[contains(text(),'Orders')]")).click();
+		String text=driver.findElement(By.xpath("//div[@class='col-sm-6 text-right']")).getText();
+		System.out.println(text);
+		
+	    int index1=	text.indexOf("(");
+	    int index2= text.indexOf("Pages"); 
+	    
+	    System.out.println(index1+"  "+index2);
+		int total=Integer.valueOf(text.substring(index1+1, index2-1));
+		System.out.println(total);
+		
+		for(int p=1;p<=5;p++)
+		{
+			
+			WebElement active_page=driver.findElement(By.xpath("//ul[@class='pagination']//li//span"));
+			System.out.println("Active page="+active_page.getText());
+			active_page.click();
+			int rows=driver.findElements(By.xpath("//table[@class='table table-bordered table-hover']//tbody//tr")).size();
+			
+			System.out.println("Total No Of Rows:"+rows);
+			
+			//read data in specific row
+			for(int i=1;i<3;i++)
+			{
+				
+					String order_id=driver.findElement(By.xpath("//table[@class='table table-bordered table-hover']//tbody//tr["+i+"]//td[2]")).getText();
+				    String customer=driver.findElement(By.xpath("//table[@class='table table-bordered table-hover']//tbody//tr["+i+"]//td[3]")).getText();
+				    String status=driver.findElement(By.xpath("//table[@class='table table-bordered table-hover']//tbody//tr["+i+"]//td[4]")).getText();
+			        
+				    System.out.println(order_id+"     "+customer+"    "+status);
+			
+			}
+			
+			
+			String s=Integer.toString(p+1);
+			WebElement next=driver.findElement(By.xpath("//ul[@class='pagination']//a[contains(text(),'"+s+"')]"));
+			next.click();
+			
+			
+		}
+		}
+		
+		
+		
+		
+		
+	}
