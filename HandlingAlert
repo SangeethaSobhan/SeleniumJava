@@ -1,0 +1,40 @@
+package practiceProgram;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HandlingAlert {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://the-internet.herokuapp.com/javascript_alerts");
+		/*driver.findElement(By.xpath("//button[contains(text(),'Click for JS Alert')]")).click();
+		Thread.sleep(3000);
+		//driver.switchTo().alert().accept(); // to accept alert
+		*/
+		
+		
+		/*driver.findElement(By.xpath("//li//button[contains(text(),'Click for JS Confirm')]")).click();
+		Thread.sleep(3000);
+		driver.switchTo().alert().accept(); // to accept alert
+		driver.switchTo().alert().dismiss(); // to dismiss alert
+		*/
+		 
+		
+		driver.findElement(By.xpath("//button[contains(text(),'Click for JS Prompt')]")).click();
+		Alert alt=driver.switchTo().alert();
+		Thread.sleep(3000);
+		alt.sendKeys("Hai");
+		Thread.sleep(3000);
+		alt.accept();
+		Thread.sleep(3000);
+		driver.close();
+		
+		}
+
+}
